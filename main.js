@@ -68,6 +68,8 @@ function renderBook(id) {
     books.append(book);
 }
 
+console.log('test');
+
 const form = document.getElementById('form');
 form.addEventListener('submit', function(event) {
     event.preventDefault();
