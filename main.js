@@ -82,8 +82,6 @@ class book{
         myLibrary.splice(this.id, 1)
         localStorage.setItem(0, JSON.stringify(myLibrary));
     }
-
-
 };
 
 myLibrary.forEach((element, index) => {
@@ -104,8 +102,7 @@ form.addEventListener('submit', function(event) {
     let pages = form.querySelector('[id="pages"]').value;
     let announce = form.querySelector('[id="announce"]').value;
     let id = myLibrary.length;
-    let test = new book(id, title, author, pages, announce)
-    myLibrary.push(test)
+    myLibrary.push(new book(id, title, author, pages, announce))
     localStorage.setItem(0, JSON.stringify(myLibrary))
-    test.renderBook();
+    myLibrary[id].renderBook();
 });
