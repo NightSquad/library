@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/f36501cc20.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="wrapper">
+        <button class="newBookButton" onclick=renderForm()>new book</button>
+
+        <div class="newBookForm" id="newBookForm">
+            <form action="#" id="form" name="form">
+                <fieldset>
+                    <legend>Информация о книге</legend>
+                    <div class="inputs">
+                        <div class="column">
+                            <label for="title">Название книги</label>
+                            <input type="text" id="title">
+                            <label for="author">Автор</label>
+                            <input type="text" id="author">
+                            <label for="pages">Количество страниц</label>
+                            <input type="text" id="pages">
+                        </div>
+                        <span class="separator"></span>
+                        <div class="column">
+                            <label for="announce">Краткое описание</label>
+                            <textarea name="announce" id="announce" cols="30" rows="7"></textarea>
+                        </div>
+                    </div>
+                    <input type='submit' class="newBookButton" value="add book"></input>
+                </fieldset>
+            </form>
+        </div>
+
+        <div class="books" id ='books'>
+            <!-- <div class="book">
+                <div class="bookTitle"><h5>Книга</h5></div>
+                <div class="bookIcon"><i class="fa-solid fa-book"></i></div>
+                <div class="bookAuthor"><p>Анна Каренина</p></div>
+                <div class="bookAnnounce"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum auctor massa ac nisl accumsan, et condimentum nunc dignissim. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. In viverra condimentum dui in suscipit. Donec mattis libero nec tellus ornare efficitur. Morbi volutpat lectus felis, sed pulvinar tellus ultricies porta. Sed at mattis felis. Duis rhoncus tortor congue lectus bibendum vehicula. Mauris sagittis sem enim. Etiam congue commodo dignissim. Sed euismod interdum magna quis cursus. Ut id posuere metus. Pellentesque tristique ante libero, eu eleifend massa rutrum et. Maecenas facilisis, sem non vulputate viverra, nulla mi hendrerit turpis, ac imperdiet velit risus vel elit. In sagittis vestibulum massa eu dapibus. Suspendisse ut molestie lorem.</p></div>
+                <div class="bookPages"><p>128 страниц</p></div>
+                <div class="buttons">
+                    <button class="deleteButton"><i class="fa-solid fa-trash-can"></i></button>
+                    <button class="asReadButton"><i class="fa-solid fa-eye"></i></button>
+                </div>
+            </div> -->
+        </div>
+    </div>
+</body>
+<script src="main.js"></script>
+</html>
