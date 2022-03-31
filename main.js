@@ -7,6 +7,7 @@ if (window.localStorage.length > 0) {
 const bookIcon = '<i class="fa-solid fa-book">';
 const delIcon = '<i class="fa-solid fa-trash-can"></i>';
 const asReadIcon = '<i class="fa-solid fa-eye"></i>';
+let test = ''
 
 for (item in myLibrary) {
     renderBook(item);
