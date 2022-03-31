@@ -9,11 +9,12 @@ const delIcon = '<i class="fa-solid fa-trash-can"></i>';
 const asReadIcon = '<i class="fa-solid fa-eye"></i>';
 
 class book{
-    constructor(title, author, pages, announce) {
+    constructor(id, title, author, pages, announce) {
         this.title = title;
         this.author = author;
         this.pages = pages;
         this.announce = announce;
+        this.id = id;
     }
 
     renderBook() {
@@ -44,17 +45,19 @@ class book{
         author.innerHTML = this.author;
         delButton.innerHTML = delIcon;
         asReadButton.innerHTML = asReadIcon;
+
+        if (myLibrary[this.id].viewed == 'true') {
+            book.classList.add('viewed');
+        }
     
         asReadButton.addEventListener('click', (e) => {
             e.preventDefault();
-            book.classList.toggle('viewed');
+            this.asRead(book);
         });
     
         delButton.addEventListener('click', (e) => {
             e.preventDefault();
-            book.remove();
-            myLibrary.splice(id, 1)
-            localStorage.setItem(0, JSON.stringify(myLibrary));
+            this.remove(book);
         })
         
         buttons.append(asReadButton, delButton);
@@ -63,12 +66,30 @@ class book{
         books.append(book);
     }
 
+    asRead(obj) {
+        obj.classList.toggle('viewed');
+        if (obj.classList.contains('viewed')) {
+            myLibrary[this.id].viewed = 'true';
+            localStorage.setItem(0, JSON.stringify(myLibrary));
+            return
+        } myLibrary[this.id].viewed = 'false';
+        localStorage.setItem(0, JSON.stringify(myLibrary));
+        return
+    };
+
+    remove(obj) {
+        obj.remove();
+        myLibrary.splice(this.id, 1)
+        localStorage.setItem(0, JSON.stringify(myLibrary));
+    }
+
 
 };
 
-for (item in myLibrary) {
-    item.renderBook();
-}
+myLibrary.forEach((element, index) => {
+    let newBook = new book(index, element.title, element.author, element.pages, element.announce);
+    newBook.renderBook(index);
+})
 
 function renderForm() {
     document.getElementById('newBookForm').style.display = "block";
@@ -82,8 +103,9 @@ form.addEventListener('submit', function(event) {
     let author = form.querySelector('[id="author"]').value;
     let pages = form.querySelector('[id="pages"]').value;
     let announce = form.querySelector('[id="announce"]').value;
-    let book = new book(title, author, pages, announce)
-    myLibrary.push(book)
+    let id = myLibrary.length;
+    let test = new book(id, title, author, pages, announce)
+    myLibrary.push(test)
     localStorage.setItem(0, JSON.stringify(myLibrary))
-    book.renderBook();
+    test.renderBook();
 });
