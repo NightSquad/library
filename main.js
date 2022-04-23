@@ -16,6 +16,7 @@ class book{
         this.announce = announce;
         this.id = id;
     }
+    
 
     renderBook() {
         let book = document.createElement('div');
