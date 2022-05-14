@@ -1,7 +1,6 @@
-if (window.localStorage.length > 0) {
-    var myLibrary = JSON.parse(localStorage.getItem(0));
-} else {
-    var myLibrary = [];
+var myLibrary = {}
+if (localStorage.length > 0) {
+    myLibrary = JSON.parse(localStorage.getItem(0));
 }
 
 const bookIcon = '<i class="fa-solid fa-book">';
@@ -9,12 +8,13 @@ const delIcon = '<i class="fa-solid fa-trash-can"></i>';
 const asReadIcon = '<i class="fa-solid fa-eye"></i>';
 
 class book{
-    constructor(id, title, author, pages, announce) {
+    constructor(id, title, author, pages, announce, viewed) {
         this.title = title;
         this.author = author;
         this.pages = pages;
         this.announce = announce;
         this.id = id;
+        this.viewed = viewed;
     }
     
 
@@ -47,9 +47,7 @@ class book{
         delButton.innerHTML = delIcon;
         asReadButton.innerHTML = asReadIcon;
 
-        if (myLibrary[this.id].viewed == 'true') {
-            book.classList.add('viewed');
-        }
+        this.viewed && book.classList.add('viewed');
     
         asReadButton.addEventListener('click', (e) => {
             e.preventDefault();
@@ -70,25 +68,27 @@ class book{
     asRead(obj) {
         obj.classList.toggle('viewed');
         if (obj.classList.contains('viewed')) {
-            myLibrary[this.id].viewed = 'true';
+            myLibrary[this.id].viewed = true;
             localStorage.setItem(0, JSON.stringify(myLibrary));
             return
-        } myLibrary[this.id].viewed = 'false';
+        } myLibrary[this.id].viewed = false;
         localStorage.setItem(0, JSON.stringify(myLibrary));
         return
     };
 
     remove(obj) {
         obj.remove();
-        myLibrary.splice(this.id, 1)
+        delete myLibrary[this.id]
         localStorage.setItem(0, JSON.stringify(myLibrary));
     }
 };
 
-myLibrary.forEach((element, index) => {
-    let newBook = new book(index, element.title, element.author, element.pages, element.announce);
-    newBook.renderBook(index);
-})
+let lastid = 0
+for (let key in myLibrary) {
+    let newBook = new book(myLibrary[key].id, myLibrary[key].title, myLibrary[key].author, myLibrary[key].pages, myLibrary[key].announce, myLibrary[key].viewed);
+    lastid = myLibrary[key].id
+    newBook.renderBook()
+}
 
 function renderForm() {
     document.getElementById('newBookForm').style.display = "block";
@@ -102,8 +102,10 @@ form.addEventListener('submit', function(event) {
     let author = form.querySelector('[id="author"]').value;
     let pages = form.querySelector('[id="pages"]').value;
     let announce = form.querySelector('[id="announce"]').value;
-    let id = myLibrary.length;
-    myLibrary.push(new book(id, title, author, pages, announce))
+    let id = lastid + 1;
+    let viewed = false
+    myLibrary[id] = new book(id, title, author, pages, announce, viewed)
     localStorage.setItem(0, JSON.stringify(myLibrary))
+    lastid++
     myLibrary[id].renderBook();
 });
